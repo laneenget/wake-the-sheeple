@@ -1,6 +1,8 @@
-from datastore import Connection, ConnectionStore, ConnectionstoreError
 from menu import Menu
 import view
+
+from issapi import getData
+from datastore import Connection, ConnectionStore, ConnectionstoreError
 
 connection_log = ConnectionStore()
 
@@ -26,7 +28,8 @@ def create_menu():
     return menu
 
 """Take user input latitude and longitude, query the three APIs to find appropriate data, and prompt user to save if the user desires"""
-#def search_apis():
+def search_apis():
+    getData()
 
 def search_bookmarks():
 
