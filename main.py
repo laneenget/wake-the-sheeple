@@ -18,7 +18,7 @@ def main():
 def create_menu():
 
     menu = Menu()
-    menu.add_command('1', 'Search APIs', search_apis)
+    menu.add_command('1', 'Show how the world government is destroying the earth.', search_apis)
     menu.add_command('2', 'Search bookmarks', search_bookmarks)
     menu.add_command('3', 'Show all bookmarks', show_all)
     menu.add_command('Q', 'Quit', quit_program)
