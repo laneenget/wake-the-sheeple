@@ -6,7 +6,8 @@ from pprint import pprint
 def getData():
     url = 'http://api.open-notify.org/iss-now.json'
     data = requests.get(url).json()
-    storeData(data)
+    lat, lng = storeData(data)
+    return lat, lng
 
 def storeData(data):
     issData = {}
@@ -17,7 +18,4 @@ def storeData(data):
     lat = data['iss_position']['latitude']
     lng = data['iss_position']['longitude']
     
-    latLngList.append([lat, lng])
-    issData.update({time : latLngList})
-
-    pprint(issData)
+    return lat, lng

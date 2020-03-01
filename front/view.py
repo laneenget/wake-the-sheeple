@@ -1,4 +1,4 @@
-from datastore import Connection
+from back.datastore import Connection
 
 def get_choice(menu):
 
