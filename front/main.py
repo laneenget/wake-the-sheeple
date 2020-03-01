@@ -1,8 +1,8 @@
 from menu import Menu
 import view
 
-from issapi import getData
-from datastore import Connection, ConnectionStore, ConnectionstoreError
+from back.api.issapi import getData
+from back.datastore import Connection, ConnectionStore, ConnectionstoreError
 
 connection_log = ConnectionStore()
 
