@@ -1,8 +1,10 @@
 from menu import Menu
 import view
 
-from back.api.issapi import getData
-from back.datastore import Connection, ConnectionStore, ConnectionstoreError
+from issapi import getData
+from earthquakeapi import get_earthquake
+from airqualityapi import get_aq
+from datastore import Connection, ConnectionStore, ConnectionstoreError
 
 connection_log = ConnectionStore()
 
@@ -29,7 +31,13 @@ def create_menu():
 
 """Take user input latitude and longitude, query the three APIs to find appropriate data, and prompt user to save if the user desires"""
 def search_apis():
-    getData()
+    lat, lng, dateTime = getData()
+    magnitude = get_earthquake(lat, lng)
+    qual = get_aq(lat, lng)
+
+    if(magnitude):
+        print(magnitude)
+
 
 def search_bookmarks():
 
