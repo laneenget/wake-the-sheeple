@@ -9,10 +9,10 @@ def main():
     menu = create_menu()
 
     while True:
-        command = view.get_choice(menu) #Get appropriate command
-        action = menu.get_action(command) #Call action
+        command = view.get_choice(menu) 
+        action = menu.get_action(command) 
         action()
-        if command.upper() == 'Q': #End program
+        if command.upper() == 'Q': 
             break
 
 def create_menu():
