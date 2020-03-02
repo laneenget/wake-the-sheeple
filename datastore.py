@@ -70,29 +70,17 @@ class ConnectionStore:
 
         con.close()
 
-    def _search_connection(self, search_connection):
-
-        connections = []
-
-        con = sqlite3.connect(db)
-        rows = con.execute(search_connection)
-
-        for r in rows:
-            connection = Connection(r[0], r[1], r[2], r[3], r[4], r[5])
-            connections.append(connection)
-
-        return connections
-
     def connection_search(self, string, data):
 
         search_connection = 'SELECT * FROM Connections WHERE ? = ?'
         connections = []
 
         con = sqlite3.connect(db)
+        con.row_factory = sqlite3.Row
         rows = con.execute(search_connection, (string, data))
 
         for r in rows:
-            connection = Connection(r[0], r[1], r[2], r[3], r[4], r[5])
+            connection = Connection(r['lat'], r['long'], r['air'], r['magnitude'], r['date'], r['id'])
             connections.append(connection)
 
         return connections
@@ -103,10 +91,11 @@ class ConnectionStore:
         connections = []
 
         con = sqlite3.connect(db)
+        con.row_factory = sqlite3.Row
         rows = con.execute(search_connection)
 
         for r in rows:
-            connection = Connection(r[0], r[1], r[2], r[3], r[4], r[5])
+            connection = Connection(r['lat'], r['long'], r['air'], r['magnitude'], r['date'], r['id'])
             connections.append(connection)
 
         return connections
