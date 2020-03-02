@@ -51,39 +51,10 @@ class ConnectionStore:
 
         con = sqlite3.connect(db)
 
-        try:
-            with sqlite3.connect(db) as con:
-                row = con.execute(add_connection, (connection.date, connection.latitude, connection.longitude, connection.magnitude, connection.air))
-        except sqlite3.IntegrityError as e:
-            raise ConnectionstoreError(f'This data is already in the database.')
-        finally:
-            con.close()
-    
-    def _delete_connection(self, connection):
-
-        delete_connection = 'DELETE FROM Connections WHERE id = ?'
-
-        con = sqlite3.connect(db)
-
         with con:
-            con.execute(delete_connection, (connection.id, ))
-
+            row = con.execute(add_connection, (connection.date, connection.latitude, connection.longitude, connection.magnitude, connection.air))
+    
         con.close()
-
-    def connection_search(self, string, data):
-
-        search_connection = 'SELECT * FROM Connections WHERE ? = ?'
-        connections = []
-
-        con = sqlite3.connect(db)
-        con.row_factory = sqlite3.Row
-        rows = con.execute(search_connection, (string, data))
-
-        for r in rows:
-            connection = Connection(r['lat'], r['long'], r['magnitude'], r['air'], r['date'], r['id'])
-            connections.append(connection)
-
-        return connections
 
     def connections_search_all(self):
 
@@ -99,6 +70,3 @@ class ConnectionStore:
             connections.append(connection)
 
         return connections
-
-class ConnectionstoreError(Exception):
-    pass

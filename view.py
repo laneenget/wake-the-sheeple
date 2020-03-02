@@ -11,22 +11,14 @@ def get_choice(menu):
         else:
             print('Not a valid choice, try again.')
 
-def get_search_data():
-
-    latitude, longitude = input('Enter the latitude and longitude you\'d like to search separated by a space: ').split()
-    return latitude, longitude
-
-
 def get_save():
 
-    save = input('Would you like to bookmark this data? Enter Y/N: ')
-    return save
-
-def get_param():
-
-    string = input('Enter the parameters by which you\'d like to search (coordinates, date, etc.): ')
-    data = input('Enter the data you are looking for: ')
-    return string, data
+    while True:
+        save = input('Would you like to bookmark this data? Enter Y/N: ').upper()
+        if save in ['Y', 'N']:
+            return save
+        else:
+            print('Not a valid choice. Try again.')
 
 def show_data(connections):
 
