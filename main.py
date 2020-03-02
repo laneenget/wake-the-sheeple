@@ -1,6 +1,5 @@
 from menu import Menu
 import view
-from view_utils import display_correlations
 
 from issapi import getData
 from earthquakeapi import get_earthquake
@@ -37,7 +36,7 @@ def search_apis():
     qual = get_aq(lat, lng)
     new_connection = Connection(lat, lng, magnitude, qual, dateTime, id)
     
-    display_correlations(new_connection)
+    view.show_correlation(new_connection)
     save = view.get_save()
     if save == 'Y':
         new_connection.save()
