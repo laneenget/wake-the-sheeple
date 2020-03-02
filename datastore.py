@@ -5,11 +5,11 @@ db = os.path.join('conspiracystore.db')
 
 class Connection:
 
-    def __init__(self, latitude, longitude, earthquake, air, date, id):
+    def __init__(self, latitude, longitude, magnitude, air, date, id):
 
         self.latitude = latitude
         self.longitude = longitude
-        self.earthquake = earthquake
+        self.magnitude = magnitude
         self.air = air
         self.date = date
         self.id = id
@@ -18,11 +18,11 @@ class Connection:
 
     def __str__(self):
 
-        return self.id + ' ' + self.latitude + ' ' + self.longitude + ' ' + self.earthquake + ' ' + self.air + ' ' + self.date
+        return f'{self.id}. Date and time: {self.date}, Coordinates: [{self.latitude}, {self.longitude}], Air quality: {self.air}, Magnitude: {self.magnitude}'
 
     def __repr__(self):
 
-        return self.id + ' ' + self.latitude + ' ' + self.longitude + ' ' + self.earthquake + ' ' + self.air + ' ' + self.date
+        return f'{self.id}. Date and time: {self.date}, Coordinates: [{self.latitude}, {self.longitude}], Air quality: {self.air}, Magnitude: {self.magnitude}'
 
     def save(self):
 
@@ -36,7 +36,7 @@ class ConnectionStore:
 
     def __init__(self):
 
-        insert_connection = 'CREATE TABLE IF NOT EXISTS Connections (id INT PRIMARY KEY, date TEXT, lat FLOAT, long FLOAT, air TEXT, magnitude FLOAT)'
+        insert_connection = 'CREATE TABLE IF NOT EXISTS Connections (id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, lat FLOAT, long FLOAT, air TEXT, magnitude FLOAT)'
 
         con = sqlite3.connect(db)
 
@@ -51,51 +51,10 @@ class ConnectionStore:
 
         con = sqlite3.connect(db)
 
-        try:
-            with sqlite3.connect(db) as con:
-                row = con.execute(add_connection, (connection.date, connection.latitude, connection.longitude, connection.air, connection.magnitude))
-        except sqlite3.IntegrityError as e:
-            raise ConnectionstoreError(f'This data is already in the database.')
-        finally:
-            con.close()
-    
-    def _delete_connection(self, connection):
-
-        delete_connection = 'DELETE FROM Connections WHERE id = ?'
-
-        con = sqlite3.connect(db)
-
         with con:
-            con.execute(delete_connection, (connection.id, ))
-
+            row = con.execute(add_connection, (connection.date, connection.latitude, connection.longitude, connection.magnitude, connection.air))
+    
         con.close()
-
-    def _search_connection(self, search_connection):
-
-        connections = []
-
-        con = sqlite3.connect(db)
-        rows = con.execute(search_connection)
-
-        for r in rows:
-            connection = Connection(r[0], r[1], r[2], r[3], r[4], r[5])
-            connections.append(connection)
-
-        return connections
-
-    def connection_search(self, string, data):
-
-        search_connection = 'SELECT * FROM Connections WHERE ? = ?'
-        connections = []
-
-        con = sqlite3.connect(db)
-        rows = con.execute(search_connection, (string, data))
-
-        for r in rows:
-            connection = Connection(r[0], r[1], r[2], r[3], r[4], r[5])
-            connections.append(connection)
-
-        return connections
 
     def connections_search_all(self):
 
@@ -103,13 +62,11 @@ class ConnectionStore:
         connections = []
 
         con = sqlite3.connect(db)
+        con.row_factory = sqlite3.Row
         rows = con.execute(search_connection)
 
         for r in rows:
-            connection = Connection(r[0], r[1], r[2], r[3], r[4], r[5])
+            connection = Connection(r['lat'], r['long'], r['magnitude'], r['air'], r['date'], r['id'])
             connections.append(connection)
 
         return connections
-
-class ConnectionstoreError(Exception):
-    pass

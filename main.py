@@ -1,11 +1,10 @@
 from menu import Menu
 import view
-from view_utils import display_correlations
 
 from issapi import getData
 from earthquakeapi import get_earthquake
 from airqualityapi import get_aq
-from datastore import Connection, ConnectionStore, ConnectionstoreError
+from datastore import Connection, ConnectionStore
 
 connection_log = ConnectionStore()
 
@@ -24,28 +23,21 @@ def create_menu():
 
     menu = Menu()
     menu.add_command('1', 'Show how the world government is destroying the earth.', search_apis)
-    menu.add_command('2', 'Search bookmarks', search_bookmarks)
-    menu.add_command('3', 'Show all bookmarks', show_all)
+    menu.add_command('2', 'Show all bookmarks', show_all)
     menu.add_command('Q', 'Quit', quit_program)
 
     return menu
 
-"""Take user input latitude and longitude, query the three APIs to find appropriate data, and prompt user to save if the user desires"""
 def search_apis():
     lat, lng, dateTime = getData()
     magnitude = get_earthquake(lat, lng)
     qual = get_aq(lat, lng)
+    new_connection = Connection(lat, lng, magnitude, qual, dateTime, id)
     
-    display_correlations(lat, lng, dateTime, magnitude, qual)
-    
-
-
-def search_bookmarks():
-
-    string, data = view.get_param()
-    connections = connection_log.connection_search(string, data)
-    view.show_data(connections)
-
+    view.show_correlation(new_connection)
+    save = view.get_save()
+    if save == 'Y':
+        new_connection.save()
 
 def show_all():
 
