@@ -1,5 +1,6 @@
 from menu import Menu
 import view
+from view_utils import display_correlations
 
 from issapi import getData
 from earthquakeapi import get_earthquake
@@ -34,9 +35,9 @@ def search_apis():
     lat, lng, dateTime = getData()
     magnitude = get_earthquake(lat, lng)
     qual = get_aq(lat, lng)
-
-    if(magnitude):
-        print(magnitude)
+    
+    display_correlations(lat, lng, dateTime, magnitude, qual)
+    
 
 
 def search_bookmarks():

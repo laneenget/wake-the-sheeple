@@ -47,7 +47,7 @@ class ConnectionStore:
 
     def _add_connection(self, connection):
 
-        add_connection = 'INSERT INTO Connections (date, lat, long, air, magnitude) VALUES (?, ?, ?, ?, ?)'
+        add_connection = 'INSERT INTO Connections (date, lat, long, magnitude, air) VALUES (?, ?, ?, ?, ?)'
 
         con = sqlite3.connect(db)
 
