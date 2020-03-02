@@ -30,15 +30,17 @@ def create_menu():
 
     return menu
 
-"""Take user input latitude and longitude, query the three APIs to find appropriate data, and prompt user to save if the user desires"""
+
 def search_apis():
     lat, lng, dateTime = getData()
     magnitude = get_earthquake(lat, lng)
     qual = get_aq(lat, lng)
     
     display_correlations(lat, lng, dateTime, magnitude, qual)
+    save = view.get_save()
+    if save == 'Y':
+        connection_log.save()
     
-
 
 def search_bookmarks():
 
