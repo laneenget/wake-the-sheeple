@@ -35,11 +35,12 @@ def search_apis():
     lat, lng, dateTime = getData()
     magnitude = get_earthquake(lat, lng)
     qual = get_aq(lat, lng)
+    new_connection = Connection(lat, lng, magnitude, qual, dateTime, id)
     
-    display_correlations(lat, lng, dateTime, magnitude, qual)
+    display_correlations(new_connection)
     save = view.get_save()
     if save == 'Y':
-        connection_log.save()
+        new_connection.save()
     
 
 def search_bookmarks():

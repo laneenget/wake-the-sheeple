@@ -5,11 +5,11 @@ db = os.path.join('conspiracystore.db')
 
 class Connection:
 
-    def __init__(self, latitude, longitude, earthquake, air, date, id):
+    def __init__(self, latitude, longitude, magnitude, air, date, id):
 
         self.latitude = latitude
         self.longitude = longitude
-        self.earthquake = earthquake
+        self.magnitude = magnitude
         self.air = air
         self.date = date
         self.id = id
@@ -18,11 +18,11 @@ class Connection:
 
     def __str__(self):
 
-        return self.id + ' ' + self.latitude + ' ' + self.longitude + ' ' + self.earthquake + ' ' + self.air + ' ' + self.date
+        return f'{self.id}. Date and time: {self.date}, Coordinates: [{self.latitude}, {self.longitude}], Air quality: {self.air}, Magnitude: {self.magnitude}'
 
     def __repr__(self):
 
-        return self.id + ' ' + self.latitude + ' ' + self.longitude + ' ' + self.earthquake + ' ' + self.air + ' ' + self.date
+        return f'{self.id}. Date and time: {self.date}, Coordinates: [{self.latitude}, {self.longitude}], Air quality: {self.air}, Magnitude: {self.magnitude}'
 
     def save(self):
 
