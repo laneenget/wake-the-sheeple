@@ -36,7 +36,7 @@ class ConnectionStore:
 
     def __init__(self):
 
-        insert_connection = 'CREATE TABLE IF NOT EXISTS Connections (id INT PRIMARY KEY, date TEXT, lat FLOAT, long FLOAT, air TEXT, magnitude FLOAT)'
+        insert_connection = 'CREATE TABLE IF NOT EXISTS Connections (id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, lat FLOAT, long FLOAT, air TEXT, magnitude FLOAT)'
 
         con = sqlite3.connect(db)
 
@@ -53,7 +53,7 @@ class ConnectionStore:
 
         try:
             with sqlite3.connect(db) as con:
-                row = con.execute(add_connection, (connection.date, connection.latitude, connection.longitude, connection.air, connection.magnitude))
+                row = con.execute(add_connection, (connection.date, connection.latitude, connection.longitude, connection.magnitude, connection.air))
         except sqlite3.IntegrityError as e:
             raise ConnectionstoreError(f'This data is already in the database.')
         finally:
@@ -80,7 +80,7 @@ class ConnectionStore:
         rows = con.execute(search_connection, (string, data))
 
         for r in rows:
-            connection = Connection(r['lat'], r['long'], r['air'], r['magnitude'], r['date'], r['id'])
+            connection = Connection(r['lat'], r['long'], r['magnitude'], r['air'], r['date'], r['id'])
             connections.append(connection)
 
         return connections
@@ -95,7 +95,7 @@ class ConnectionStore:
         rows = con.execute(search_connection)
 
         for r in rows:
-            connection = Connection(r['lat'], r['long'], r['air'], r['magnitude'], r['date'], r['id'])
+            connection = Connection(r['lat'], r['long'], r['magnitude'], r['air'], r['date'], r['id'])
             connections.append(connection)
 
         return connections
