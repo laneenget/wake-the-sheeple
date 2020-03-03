@@ -1,9 +1,9 @@
 from front.menu import Menu
 from front.view import get_choice, show_correlation, get_save, show_data, message
 
-from back.api.issapi import getData
-from back.api.earthquakeapi import get_earthquake
-from back.api.airqualityapi import get_aq
+from back.api.iss_api import getAllData
+from back.api.earthquake_api import return_quake
+from back.api.air_quality_api import return_aq
 from back.datastore import Connection, ConnectionStore
 
 connection_log = ConnectionStore()
@@ -29,9 +29,9 @@ def create_menu():
     return menu
 
 def search_apis():
-    lat, lng, dateTime = getData()
-    magnitude = get_earthquake(lat, lng)
-    qual = get_aq(lat, lng)
+    lat, lng, dateTime = getAllData()
+    magnitude = return_quake()
+    qual = return_aq()
     new_connection = Connection(lat, lng, magnitude, qual, dateTime, id)
     
     show_correlation(new_connection)
