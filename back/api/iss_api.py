@@ -20,7 +20,6 @@ def get_time():
 
     timestamp =  data['timestamp']
     dateTime = datetime.utcfromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
-    print(type(dateTime))
 
     return dateTime
 

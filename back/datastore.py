@@ -52,6 +52,15 @@ class ConnectionStore:
     
         con.close()
 
+    def delete_all_connections(self):
+
+            delete = "DELETE FROM connections"
+
+            with sqlite3.connect(db) as con:
+                con.execute(delete)
+
+            con.close()
+
     def connections_search_all(self):
 
         search_connection = 'SELECT * FROM Connections'
