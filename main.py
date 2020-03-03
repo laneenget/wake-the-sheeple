@@ -1,10 +1,10 @@
-from menu import Menu
-from view import get_choice, show_correlation, get_save, show_data, message
+from front.menu import Menu
+from front.view import get_choice, show_correlation, get_save, show_data, message
 
-from iss_api import getAllData
-from earthquake_api import return_quake
-from air_quality_api import return_aq
-from datastore import Connection, ConnectionStore
+from back.api.iss_api import getAllData
+from back.api.earthquake_api import return_quake
+from back.api.air_quality_api import return_aq
+from back.datastore import Connection, ConnectionStore
 
 connection_log = ConnectionStore()
 

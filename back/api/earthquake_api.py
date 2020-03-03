@@ -1,7 +1,7 @@
 import requests
 
 import os
-from iss_api import get_lat_lng
+from back.api.iss_api import get_lat_lng
 
 def get_earthquake():
 
