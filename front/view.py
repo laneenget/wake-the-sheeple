@@ -45,3 +45,20 @@ def show_correlation(new_connection):
 def message(msg):
     
     print(msg)
+
+# Get choice for which bookmark user would like to delete
+def delete_selection(connections):
+
+    print('Which bookmark would you like to delete?')
+    choice = input('Enter bookmark number (Ex. 1,2,3...): ')
+
+    while not choice.isdigit():
+        print('Not a valid choice. Try again')
+        choice = input('Enter bookmark number (Ex. 1,2,3...): ')
+        if choice.isdigit():
+            choice = int(choice)
+            if choice > 0 and choice <= len(connections):
+                break
+
+    return choice
+    
