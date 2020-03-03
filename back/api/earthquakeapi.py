@@ -1,8 +1,6 @@
 import requests
-from pprint import pprint
 
 import os
-import issapi
 
 def get_earthquake(lat, lon):
 

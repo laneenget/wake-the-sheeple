@@ -28,10 +28,6 @@ class Connection:
 
         self.connectionStore._add_connection(self)
 
-    def delete(self):
-        
-        self.connectionStore._delete_connection(self)
-
 class ConnectionStore:
 
     def __init__(self):

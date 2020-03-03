@@ -1,7 +1,6 @@
 import requests
 from datetime import datetime
 
-from pprint import pprint
 
 def getData():
     url = 'http://api.open-notify.org/iss-now.json'

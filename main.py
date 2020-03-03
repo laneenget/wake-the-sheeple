@@ -1,10 +1,10 @@
-from menu import Menu
-import view
+from front.menu import Menu
+from front.view import get_choice, show_correlation, get_save, show_data, message
 
-from issapi import getData
-from earthquakeapi import get_earthquake
-from airqualityapi import get_aq
-from datastore import Connection, ConnectionStore
+from back.api.issapi import getData
+from back.api.earthquakeapi import get_earthquake
+from back.api.airqualityapi import get_aq
+from back.datastore import Connection, ConnectionStore
 
 connection_log = ConnectionStore()
 
@@ -13,7 +13,7 @@ def main():
     menu = create_menu()
 
     while True:
-        command = view.get_choice(menu) 
+        command = get_choice(menu) 
         action = menu.get_action(command) 
         action()
         if command.upper() == 'Q': 
@@ -34,19 +34,19 @@ def search_apis():
     qual = get_aq(lat, lng)
     new_connection = Connection(lat, lng, magnitude, qual, dateTime, id)
     
-    view.show_correlation(new_connection)
-    save = view.get_save()
+    show_correlation(new_connection)
+    save = get_save()
     if save == 'Y':
         new_connection.save()
 
 def show_all():
 
     connections = connection_log.connections_search_all()
-    view.show_data(connections)
+    show_data(connections)
 
 def quit_program():
 
-    view.message('Thanks!')
+    message('Thanks!')
 
 if __name__ == '__main__':
     main()
