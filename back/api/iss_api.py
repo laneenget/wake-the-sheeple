@@ -15,14 +15,18 @@ def get_lat_lng():
 
     return lat, lng
 
-def getAllData():
+def get_time():
     data = getData()
-
-    lat, lng = get_lat_lng()
 
     timestamp =  data['timestamp']
     dateTime = datetime.utcfromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
+    print(type(dateTime))
 
-    
-    
+    return dateTime
+
+def getAllData():
+
+    lat, lng = get_lat_lng()
+    dateTime = get_time()
+     
     return lat, lng, dateTime
