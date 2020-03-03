@@ -48,7 +48,7 @@ class ConnectionStore:
         con = sqlite3.connect(db)
 
         with con:
-            row = con.execute(add_connection, (connection.date, connection.latitude, connection.longitude, connection.magnitude, connection.air))
+           con.execute(add_connection, (connection.date, connection.latitude, connection.longitude, connection.magnitude, connection.air))
     
         con.close()
 

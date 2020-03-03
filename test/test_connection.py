@@ -26,4 +26,4 @@ class TestConnection(TestCase):
         self.assertEqual(1, len(connections))
 
     def clear_connections(self):
-        self.CS.delete_all_entries()
+        self.CS.delete_all_connections()
