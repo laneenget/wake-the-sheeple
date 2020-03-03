@@ -4,7 +4,7 @@ from unittest.mock import patch, call
 
 from back.api.air_quality_api import return_aq
 from back.api.earthquake_api import return_quake
-from back.api.iss_api import get_lat_lng,get_time
+from back.api.iss_api import get_lat_lng, get_time
 
 
 class TestAPIs(TestCase):
