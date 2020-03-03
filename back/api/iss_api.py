@@ -5,6 +5,7 @@ from datetime import datetime
 def getData():
     url = 'http://api.open-notify.org/iss-now.json'
     data = requests.get(url).json()
+    print(data)
     return data
 
 def get_lat_lng():

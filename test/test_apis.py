@@ -2,8 +2,8 @@ import unittest
 from unittest import TestCase
 from unittest.mock import patch, call
 
-from air_quality_api import return_aq
-from earthquake_api import return_quake
+from back.api.air_quality_api import return_aq
+from back.api.earthquake_api import return_quake
 
 
 class TestAPIs(TestCase):
