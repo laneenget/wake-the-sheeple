@@ -54,7 +54,7 @@ class ConnectionStore:
 
     def delete_all_connections(self):
 
-            delete = "DELETE FROM connections"
+            delete = "DELETE FROM Connections"
 
             with sqlite3.connect(db) as con:
                 con.execute(delete)
@@ -75,3 +75,15 @@ class ConnectionStore:
             connections.append(connection)
 
         return connections
+
+
+    def delete_bookmark(self, number):
+
+        delete_connection_string = 'DELETE FROM Connections WHERE id = ?'
+
+        con = sqlite3.connect(db)
+
+        with con:
+            con.execute(delete_connection_string, (number,))
+
+        con.close()

@@ -1,10 +1,12 @@
 from front.menu import Menu
-from front.view import get_choice, show_correlation, get_save, show_data, message
+from front.view import get_choice, show_correlation, get_save, show_data, message, delete_selection
 
 from back.api.iss_api import getAllData
 from back.api.earthquake_api import return_quake
 from back.api.air_quality_api import return_aq
 from back.datastore import Connection, ConnectionStore
+
+from concurrent.futures import ThreadPoolExecutor
 
 connection_log = ConnectionStore()
 
@@ -24,6 +26,7 @@ def create_menu():
     menu = Menu()
     menu.add_command('1', 'Show how the world government is destroying the earth.', search_apis)
     menu.add_command('2', 'Show all bookmarks', show_all)
+    menu.add_command('3', 'Delete a bookmark', delete_bookmark)
     menu.add_command('Q', 'Quit', quit_program)
 
     return menu
@@ -43,6 +46,16 @@ def show_all():
 
     connections = connection_log.connections_search_all()
     show_data(connections)
+
+# User wants to delete a bookmark
+def delete_bookmark():
+
+    connections = connection_log.connections_search_all() # Get all from table in a list
+    show_data(connections) # Print connections
+    response = delete_selection(connections) # Get bookmark id user wants to delete
+    connection_log.delete_bookmark(response)
+    print('Bookmark Deleted.')
+
 
 def quit_program():
 
