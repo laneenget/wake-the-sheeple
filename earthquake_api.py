@@ -1,7 +1,7 @@
 import requests
 
 import os
-from back.api.iss_api import get_lat_lng
+from iss_api import get_lat_lng
 
 def get_earthquake():
 
@@ -13,7 +13,7 @@ def get_earthquake():
     query = {'p': lat + ',' + lon, 'format': 'json', 'filter': 'all', 'client_id': user_id, 'client_secret': key}
     url = 'https://api.aerisapi.com/earthquakes/closest/'
     data = requests.get(url, params=query).json()
-    print(data)
+
     return data
 
 def return_quake():
