@@ -2,31 +2,30 @@ import requests
 from datetime import datetime
 
 
-def getData():
+def get_data_from_iss():
     url = 'http://api.open-notify.org/iss-now.json'
     data = requests.get(url).json()
     return data
 
 def get_lat_lng():
-    data = getData()
+    data = get_data_from_iss()
 
     lat = data['iss_position']['latitude']
-    lng = data['iss_position']['longitude']
+    lon = data['iss_position']['longitude']
 
-    return lat, lng
+    return lat, lon
 
 def get_time():
-    data = getData()
+    data = get_data_from_iss()
 
     timestamp =  data['timestamp']
-    dateTime = datetime.utcfromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
-    print(type(dateTime))
+    date_time = datetime.utcfromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
 
-    return dateTime
+    return date_time
 
 def getAllData():
 
-    lat, lng = get_lat_lng()
-    dateTime = get_time()
+    lat, lon = get_lat_lng()
+    date_time = get_time()
      
-    return lat, lng, dateTime
+    return lat, lon, date_time

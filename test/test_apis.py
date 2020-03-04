@@ -17,6 +17,9 @@ class TestAPIs(TestCase):
         quality = return_aq()
         self.assertEqual(mock_quality, quality)
 
+    @patch('back.api.air_quality_api.get')    
+    def test_aq_location_not_found(self, mock_air):
+        bad_location = 
 
     @patch('back.api.earthquake_api.get_earthquake')
     def test_eq_data_parsing(self, mock_eq):
