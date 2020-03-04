@@ -26,7 +26,5 @@ def return_aq():
         return aq
     elif data['error']['code']=='invalid_client':
         return 0
-    elif data['error']['code']=='invalid_location':
-        return -1
     else:
         return None
