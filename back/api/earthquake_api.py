@@ -20,9 +20,14 @@ def return_quake():
     
     data = get_earthquake()
 
+    # Informing users of errors or success but not no relevant data
     if data['success']:
         if data['response']:
             magnitude = data['response'][0]['report']['mag']
             return magnitude
         else:
             return None
+    elif data['error']['code']=='invalid_client':
+        return 0
+    elif data['error']['code']=='invalid_location':
+        return -1

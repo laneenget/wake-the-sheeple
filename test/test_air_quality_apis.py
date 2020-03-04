@@ -5,7 +5,7 @@ from unittest.mock import patch, call
 from back.api.air_quality_api import return_aq
 
 
-class TestAPIs(TestCase):
+class TestAirApi(TestCase):
     
     @patch('back.api.air_quality_api.get_aq')
     def test_aq_data_parsing(self, mock_aq):
