@@ -1,12 +1,17 @@
+"""
+    iss_api.py
+    This file handles the ISS (International Space Station) API
+"""
 import requests
 from datetime import datetime
-
 
 def get_data_from_iss():
     url = 'http://api.open-notify.org/iss-now.json'
     data = requests.get(url).json()
     return data
 
+
+# Pull latitude and longitude from API request
 def get_lat_lng():
     data = get_data_from_iss()
 
@@ -15,6 +20,8 @@ def get_lat_lng():
 
     return lat, lon
 
+
+# Pull dateTime from API request
 def get_time():
     data = get_data_from_iss()
 
@@ -23,6 +30,7 @@ def get_time():
 
     return date_time
 
+# Called from main to get latitude, longitude and dateTime and return it all
 def get_all_data():
 
     lat, lon = get_lat_lng()

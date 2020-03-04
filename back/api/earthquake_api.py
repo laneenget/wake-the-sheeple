@@ -1,8 +1,14 @@
+"""
+    earthquake_api.py
+    This file handles the earthquake API
+"""
 import requests
 
 import os
 from back.api.iss_api import get_lat_lng
 
+
+# Get data from earthquake API
 def get_earthquake():
 
     key = os.environ.get('WEATHER_KEY')
@@ -16,6 +22,8 @@ def get_earthquake():
 
     return data
 
+
+# Pull needed data from the earthquake API request
 def return_quake():
     
     data = get_earthquake()

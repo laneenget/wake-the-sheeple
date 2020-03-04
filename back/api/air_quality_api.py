@@ -1,8 +1,14 @@
+"""
+    air_quality_api.py
+    This file handles the air quality api
+"""
 import requests
 
 import os
 from back.api.iss_api import get_lat_lng
 
+
+# Get data from the Air Quality API
 def get_aq():
 
     key = os.environ.get('WEATHER_KEY')
@@ -16,6 +22,8 @@ def get_aq():
     
     return data
 
+
+# Pull needed data from the API request data
 def return_aq():
 
     data = get_aq()
