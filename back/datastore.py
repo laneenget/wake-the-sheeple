@@ -48,9 +48,18 @@ class ConnectionStore:
         con = sqlite3.connect(db)
 
         with con:
-            row = con.execute(add_connection, (connection.date, connection.latitude, connection.longitude, connection.magnitude, connection.air))
+           con.execute(add_connection, (connection.date, connection.latitude, connection.longitude, connection.magnitude, connection.air))
     
         con.close()
+
+    def delete_all_connections(self):
+
+            delete = "DELETE FROM connections"
+
+            with sqlite3.connect(db) as con:
+                con.execute(delete)
+
+            con.close()
 
     def connections_search_all(self):
 
