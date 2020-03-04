@@ -1,3 +1,8 @@
+"""
+    main.py
+    Main file that handles the flow of the program
+"""
+
 from front.menu import Menu
 from front.view import get_choice, show_correlation, get_save, show_data, message, delete_selection
 
@@ -10,17 +15,21 @@ from concurrent.futures import ThreadPoolExecutor
 
 connection_log = ConnectionStore()
 
+
 def main():
     
     menu = create_menu()
 
+    # Loop until user wants to quit
     while True:
         command = get_choice(menu) 
         action = menu.get_action(command) 
         action()
-        if command.upper() == 'Q': 
+        if command.upper() == 'Q': # Exit program
             break
 
+
+# Create the menu for user
 def create_menu():
 
     menu = Menu()
@@ -31,21 +40,26 @@ def create_menu():
 
     return menu
 
+
+# Triggered when user enters command 1, get api results for ISS, then earthquake api and air quality api
 def search_apis():
     lat, lng, dateTime = getAllData()
     magnitude = return_quake()
     qual = return_aq()
-    new_connection = Connection(lat, lng, magnitude, qual, dateTime, id)
+    new_connection = Connection(lat, lng, magnitude, qual, dateTime, id) # Create new Connection object
     
-    show_correlation(new_connection)
-    save = get_save()
+    show_correlation(new_connection) # Show data retrieved from api calls
+    save = get_save()  # Ask user if they want to bookmark results
     if save == 'Y':
-        new_connection.save()
+        new_connection.save()  # If yes, add info to table in database
 
+
+# Retrieve all bookmarks from database table and print them
 def show_all():
 
     connections = connection_log.connections_search_all()
     show_data(connections)
+
 
 # User wants to delete a bookmark
 def delete_bookmark():
@@ -57,9 +71,11 @@ def delete_bookmark():
     print('Bookmark Deleted.')
 
 
+# Exit program
 def quit_program():
 
     message('Thanks!')
+
 
 if __name__ == '__main__':
     main()

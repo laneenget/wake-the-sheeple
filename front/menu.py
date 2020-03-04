@@ -1,3 +1,7 @@
+"""
+    menu.py
+    This file contains everything regarding the menu and commands
+"""
 class Menu:
 
     def __init__(self):

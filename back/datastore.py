@@ -1,10 +1,16 @@
+"""
+    datastore.py
+    This file handles everything having to do with the database
+"""
+
 import sqlite3
 import os
 
+# database variable
 db = os.path.join('conspiracystore.db')
 
 class Connection:
-
+    # Create a new Connection Object
     def __init__(self, latitude, longitude, magnitude, air, date, id):
 
         self.latitude = latitude
@@ -28,9 +34,11 @@ class Connection:
 
         self.connectionStore._add_connection(self)
 
+
+# Class that handles all database interactions
 class ConnectionStore:
 
-    def __init__(self):
+    def __init__(self): # Create the table if it does not exist
 
         insert_connection = 'CREATE TABLE IF NOT EXISTS Connections (id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, lat FLOAT, long FLOAT, air TEXT, magnitude FLOAT)'
 
@@ -41,7 +49,7 @@ class ConnectionStore:
 
         con.close()
 
-    def _add_connection(self, connection):
+    def _add_connection(self, connection): # Insert new data into table
 
         add_connection = 'INSERT INTO Connections (date, lat, long, magnitude, air) VALUES (?, ?, ?, ?, ?)'
 
@@ -52,7 +60,7 @@ class ConnectionStore:
     
         con.close()
 
-    def delete_all_connections(self):
+    def delete_all_connections(self): # Delete all data in table
 
             delete = "DELETE FROM Connections"
 
@@ -61,7 +69,7 @@ class ConnectionStore:
 
             con.close()
 
-    def connections_search_all(self):
+    def connections_search_all(self): # Select all data from the table
 
         search_connection = 'SELECT * FROM Connections'
         connections = []
@@ -77,7 +85,7 @@ class ConnectionStore:
         return connections
 
 
-    def delete_bookmark(self, number):
+    def delete_bookmark(self, number): # Delete individual entry from table by id
 
         delete_connection_string = 'DELETE FROM Connections WHERE id = ?'
 
