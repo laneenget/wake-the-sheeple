@@ -1,3 +1,8 @@
+"""
+    main.py
+    Main file that handles the flow of the program
+"""
+
 from front.menu import Menu
 from front.view import get_choice, show_correlation, get_save, show_data, message, delete_selection
 
