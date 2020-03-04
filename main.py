@@ -6,7 +6,9 @@
 from front.menu import Menu
 from front.view import get_choice, show_correlation, get_save, show_data, message, delete_selection
 
-from back.api.iss_api import getAllData
+from exceptions import handle_air_n_quake_exceptions
+
+from back.api.iss_api import get_all_data
 from back.api.earthquake_api import return_quake
 from back.api.air_quality_api import return_aq
 from back.datastore import Connection, ConnectionStore
@@ -43,10 +45,15 @@ def create_menu():
 
 # Triggered when user enters command 1, get api results for ISS, then earthquake api and air quality api
 def search_apis():
-    lat, lng, dateTime = getAllData()
+    lat, lng, dateTime = get_all_data()
     magnitude = return_quake()
     qual = return_aq()
-    new_connection = Connection(lat, lng, magnitude, qual, dateTime, id) # Create new Connection object
+
+    # Exception handling
+    qual = handle_air_n_quake_exceptions(qual)
+    magnitude =handle_air_n_quake_exceptions(magnitude)
+
+    new_connection = Connection(lat, lng, magnitude, qual, dateTime, id)
     
     show_correlation(new_connection) # Show data retrieved from api calls
     save = get_save()  # Ask user if they want to bookmark results

@@ -28,8 +28,11 @@ def return_aq():
 
     data = get_aq()
 
+    # Informing users of errors or success but not no relevant data
     if data['success']:
         aq = data['response'][0]['periods'][0]['category']
         return aq
+    elif data['error']['code']=='invalid_client':
+        return 0
     else:
         return None
