@@ -17,9 +17,21 @@ class TestAPIs(TestCase):
         quality = return_aq()
         self.assertEqual(mock_quality, quality)
 
-    @patch('back.api.air_quality_api.get')    
-    def test_aq_location_not_found(self, mock_air):
-        bad_location = 
+    @patch('back.api.air_quality_api.get_aq')    
+    def test_aq_location_not_found(self, mock_aq):
+        bad_api_response = {"success": False,"error": {"code": "invalid_location","description": "The requested location was not found."},"response": []}
+        mock_aq.side_effect = [bad_api_response]
+        expected_value = -1
+        quality = return_aq()
+        self.assertEqual(expected_value, quality)
+
+    @patch('back.api.air_quality_api.get_aq')
+    def test_aq_invalid_credentials(self, mock_aq):
+        bad_api_response = {'success': False, 'error': {'code': 'invalid_client', 'description': 'The client provided is invalid.'}, 'response': []}
+        mock_aq.side_effect = [bad_api_response]
+        expected_value = 0
+        quality = return_aq()
+        self.assertEqual(expected_value, quality)
 
     @patch('back.api.earthquake_api.get_earthquake')
     def test_eq_data_parsing(self, mock_eq):
@@ -29,7 +41,7 @@ class TestAPIs(TestCase):
         mag = return_quake()
         self.assertEqual(mock_magnitude, mag)
 
-    @patch('back.api.iss_api.getData')
+    @patch('back.api.iss_api.get_data_from_iss')
     def test_iss_data_parsing_latlon(self, mock_loc):
         mock_lat = '-10'
         mock_lon = '10'
@@ -39,7 +51,7 @@ class TestAPIs(TestCase):
         self.assertEqual(mock_lon, lon)
         self.assertEqual(mock_lat, lat)
 
-    @patch('back.api.iss_api.getData')
+    @patch('back.api.iss_api.get_data_from_iss')
     def test_iss_data_parsing_date_time(self, mock_time):
         mock_timestamp = 1583202024
         mock_translated_time = '2020-03-03 02:20:24'

@@ -23,7 +23,7 @@ def get_time():
 
     return date_time
 
-def getAllData():
+def get_all_data():
 
     lat, lon = get_lat_lng()
     date_time = get_time()
